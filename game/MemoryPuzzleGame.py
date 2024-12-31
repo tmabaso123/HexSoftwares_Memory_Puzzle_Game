@@ -20,7 +20,8 @@ class MemoryPuzzleGame:
         timer_label (tk.Label): Label widget to display the timer.
         board_frame (tk.Frame): Frame widget containing the game board.
     """
-
+    tile_values = tile_values
+    
     def __init__(self, root):
         """
         Initialize the Memory Puzzle Game.
