@@ -116,3 +116,13 @@ class MemoryGame:
 
         self.first_pick = None
         self.second_pick = None
+
+    def end_game(self, message):
+        """
+        End the game and display a message to the player.
+
+        Args:
+            message (str): The message to display in the game over dialog.
+        """
+        messagebox.showinfo("Game Over", message)
+        self.root.quit()
