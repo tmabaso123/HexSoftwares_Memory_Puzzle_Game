@@ -93,3 +93,26 @@ class MemoryGame:
         elif not self.second_pick:
             self.second_pick = (row, col)
             self.root.after(500, self.check_match)
+
+    def check_match(self):
+        """
+        Check if the two selected tiles match.
+
+        Updates the game state based on whether the tiles match or not.
+        """
+        r1, c1 = self.first_pick
+        r2, c2 = self.second_pick
+        
+        btn1, val1 = self.buttons[r1][c1]
+        btn2, val2 = self.buttons[r2][c2]
+
+        if val1 == val2:
+            self.matched_pairs += 1
+            if self.matched_pairs == len(tile_values) // 2:
+                self.end_game("Congratulations! You matched all pairs!")
+        else:
+            btn1.config(text="", state="normal")
+            btn2.config(text="", state="normal")
+
+        self.first_pick = None
+        self.second_pick = None
