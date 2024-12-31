@@ -11,3 +11,12 @@ class TestMemoryPuzzleGame(unittest.TestCase):
         """
         self.root = tk.Tk()
         self.game = MemoryPuzzleGame(self.root)
+
+    def test_initial_setup(self):
+        """
+        Test that the game initializes correctly.
+        """
+        self.assertEqual(len(self.game.buttons), 4)
+        self.assertEqual(len(self.game.buttons[0]), 3)
+        self.assertEqual(self.game.matched_pairs, 0)
+        self.assertEqual(self.game.time_left, time_limit)
