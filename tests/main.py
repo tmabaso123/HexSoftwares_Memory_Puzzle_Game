@@ -20,3 +20,13 @@ class TestMemoryPuzzleGame(unittest.TestCase):
         self.assertEqual(len(self.game.buttons[0]), 3)
         self.assertEqual(self.game.matched_pairs, 0)
         self.assertEqual(self.game.time_left, time_limit)
+
+
+    def test_reveal_tile(self):
+        """
+        Test that revealing a tile works as expected.
+        """
+        self.game.reveal_tile(0, 0)
+        btn, value = self.game.buttons[0][0]
+        self.assertEqual(btn.cget("text"), value)
+        self.assertEqual(btn.cget("state"), "disabled")
