@@ -30,3 +30,20 @@ class TestMemoryPuzzleGame(unittest.TestCase):
         btn, value = self.game.buttons[0][0]
         self.assertEqual(btn.cget("text"), value)
         self.assertEqual(btn.cget("state"), "disabled")
+
+    def test_match_logic(self):
+        """
+        Simulate a match and test the game's matching logic.
+        """
+        self.game.first_pick = (0, 0)
+        self.game.buttons[0][0][0].config(text=tile_values[0])
+        self.game.second_pick = (0, 1)
+        self.game.buttons[0][1][0].config(text=tile_values[1])
+
+        if tile_values[0] == tile_values[1]:
+            self.game.check_match()
+            self.assertEqual(self.game.matched_pairs, 1)
+        else:
+            self.game.check_match()
+            self.assertEqual(self.game.matched_pairs, 0)
+
