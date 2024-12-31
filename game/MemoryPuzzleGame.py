@@ -6,7 +6,7 @@ from tkinter import messagebox
 tile_values = list('AABBCCDDEEFF')  
 time_limit = 60  # Time limit in seconds
 
-class MemoryGame:
+class MemoryPuzzleGame:
     """
     A class representing the Memory Puzzle Game.
 
@@ -126,3 +126,8 @@ class MemoryGame:
         """
         messagebox.showinfo("Game Over", message)
         self.root.quit()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    game = MemoryPuzzleGame(root)
+    root.mainloop()
