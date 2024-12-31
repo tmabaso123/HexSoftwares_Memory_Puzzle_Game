@@ -47,3 +47,10 @@ class TestMemoryPuzzleGame(unittest.TestCase):
             self.game.check_match()
             self.assertEqual(self.game.matched_pairs, 0)
 
+    def test_end_game(self):
+        """
+        Test the end_game method to ensure it works correctly.
+        """
+        self.game.end_game("Test Message")
+        self.assertTrue(messagebox.askokcancel.called)
+
