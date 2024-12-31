@@ -1,0 +1,95 @@
+import tkinter as tk
+import random
+from tkinter import messagebox
+
+# Constants
+tile_values = list('AABBCCDDEEFF')  
+time_limit = 60  # Time limit in seconds
+
+class MemoryGame:
+    """
+    A class representing the Memory Puzzle Game.
+
+    Attributes:
+        root (tk.Tk): The root window for the game.
+        buttons (list): A 2D list of button widgets and their corresponding values.
+        first_pick (tuple): The first tile selected by the player (row, col).
+        second_pick (tuple): The second tile selected by the player (row, col).
+        matched_pairs (int): The number of pairs successfully matched.
+        time_left (int): The remaining time for the game in seconds.
+        timer_label (tk.Label): Label widget to display the timer.
+        board_frame (tk.Frame): Frame widget containing the game board.
+    """
+
+    def __init__(self, root):
+        """
+        Initialize the Memory Puzzle Game.
+
+        Args:
+            root (tk.Tk): The root window for the game.
+        """
+        self.root = root
+        self.root.title("Memory Puzzle Game")
+
+        # Shuffle the tile values
+        random.shuffle(tile_values)
+
+        # Create the board
+        self.buttons = []
+        self.first_pick = None
+        self.second_pick = None
+        self.matched_pairs = 0
+        self.time_left = time_limit
+
+        self.timer_label = tk.Label(root, text=f"Time left: {self.time_left}s", font=("Arial", 14))
+        self.timer_label.pack()
+
+        self.board_frame = tk.Frame(root)
+        self.board_frame.pack()
+
+        for i in range(4):
+            row = []
+            for j in range(3):
+                btn = tk.Button(self.board_frame, text="", width=6, height=3, command=lambda r=i, c=j: self.reveal_tile(r, c))
+                btn.grid(row=i, column=j)
+                row.append((btn, tile_values[i * 3 + j]))
+            self.buttons.append(row)
+
+        self.start_timer()
+
+    def start_timer(self):
+        """
+        Start the countdown timer for the game.
+
+        Decreases the time_left attribute every second and ends the game if time runs out.
+        """
+        if self.time_left > 0:
+            self.time_left -= 1
+            self.timer_label.config(text=f"Time left: {self.time_left}s")
+            self.root.after(1000, self.start_timer)
+        else:
+            self.end_game("Time's up! You lost.")
+
+    def reveal_tile(self, row, col):
+        """
+        Reveal the tile at the specified position.
+
+        Parameters:
+            row (int): The row index of the tile.
+            col (int): The column index of the tile.
+        """
+        if self.first_pick and self.second_pick:
+            return
+
+        button, value = self.buttons[row][col]
+
+        if not button.cget("state") == "normal":
+            return
+
+        button.config(text=value, state="disabled")
+
+        if not self.first_pick:
+            self.first_pick = (row, col)
+        elif not self.second_pick:
+            self.second_pick = (row, col)
+            self.root.after(500, self.check_match)
