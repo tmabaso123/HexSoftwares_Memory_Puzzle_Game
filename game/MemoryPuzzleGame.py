@@ -48,12 +48,12 @@ class MemoryPuzzleGame:
         self.board_frame = tk.Frame(root)
         self.board_frame.pack()
 
-        for i in range(4):
+        for i in range(5):
             row = []
-            for j in range(3):
-                btn = tk.Button(self.board_frame, text="", width=6, height=3, command=lambda r=i, c=j: self.reveal_tile(r, c))
+            for j in range(4):
+                btn = tk.Button(self.board_frame, text="", width=8, height=4, command=lambda r=i, c=j: self.reveal_tile(r, c))
                 btn.grid(row=i, column=j)
-                row.append((btn, tile_values[i * 3 + j]))
+                row.append((btn, tile_values[i * 4 + j]))
             self.buttons.append(row)
 
         self.start_timer()
